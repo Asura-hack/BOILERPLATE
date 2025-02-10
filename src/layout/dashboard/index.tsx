@@ -35,6 +35,7 @@ const DashboardLayout: React.FC = () => {
           {dom}
         </Link>
       )}
+      layout="top"
       contentStyle={{
         margin: 0,
         background: "#f7fafc",
@@ -94,15 +95,14 @@ const DashboardLayout: React.FC = () => {
         );
       }}
       token={{
-        sider: {
-          colorTextMenuTitle: "#fff",
-          colorMenuBackground: "#212e42",
-          colorBgMenuItemSelected: "#202836",
+        header: {
+          colorHeaderTitle: "#fff",
+          colorBgHeader: "#0077f4",
+          colorBgMenuItemSelected: "#0077f4",
           colorBgMenuItemHover: "#202836",
           colorTextMenu: "#fff",
           colorTextMenuSelected: "#fff",
-          colorTextMenuItemHover: "#fff",
-          menuHeight: 55,
+          colorTextMenuActive: "#fff",
         },
       }}
     >
