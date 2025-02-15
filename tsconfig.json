@@ -2,8 +2,8 @@
   "compilerOptions": {
     "allowJs": false,
     "allowSyntheticDefaultImports": true,
-    "baseUrl": ".",
-    "esModuleInterop": false,
+    "baseUrl": "./src",
+    "esModuleInterop": true,
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
@@ -15,15 +15,7 @@
     "noImplicitAny": true,
     "noImplicitThis": true,
     "paths": {
-      "@*": ["./src/.vit/*"],
-      "components/*": ["./src/components/*"],
-      "pages/*": ["./src/pages/*"],
-      "layout/*": ["./src/layout/*"],
-      "service/*": ["./src/services/*"],
-      "utils/*": ["./src/utils/*"],
-      "hook/*": ["./src/hooks/*"],
-      "styles/*": ["./src/styles/*"],
-      "*": ["./src/*"]
+      "hook/*": ["hooks/*"]
     },
     "resolveJsonModule": true,
     "skipLibCheck": true,
@@ -32,5 +24,5 @@
     "target": "ESNext",
     "useDefineForClassFields": true
   },
-  "include": ["./src", "client.d.ts", "global.d.ts"]
+  "include": ["./src", "*.d.ts"]
 }

@@ -4,23 +4,25 @@ import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
 import ProTable from "@ant-design/pro-table";
 
 interface DataTableProps {
-  data: any[];
+  data: any[];          // Adjust the type of 'data' if needed
   onDelete: (key: number) => void;
   onFix: (key: number) => void;
-  onView: (key: number) => void; // Add function for viewing details
+  onView?: (key: number) => void;
+  loading: boolean;     // Add this line
 }
+
 
 const DataTable: React.FC<DataTableProps> = ({ data, onDelete }) => {
   const columns = [
     {
       title: "Овог",
-      dataIndex: "lastName",
-      key: "lastName",
+      dataIndex: "last_name",
+      key: "last_name",
     },
     {
       title: "Нэр",
-      dataIndex: "firstName",
-      key: "firstName",
+      dataIndex: "first_name",
+      key: "first_name",
     },
     { title: "Үүрэг", dataIndex: "role", key: "role" },
     { title: "Регистрийн дугаар", dataIndex: "regNumber", key: "regNumber" },

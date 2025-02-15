@@ -5,9 +5,9 @@ import file from "api/file";
 import { AuthContext } from "context/AuthContext";
 import { AuthActionTypes } from "context/AuthContext/type";
 import { useContext } from "react";
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { BookOpen01, Logout01 } from "untitledui-js-base";
-import menuData from "./menu";
+import { adminMenu, financeMenu, userMenu } from "./menu";
 
 const Logo = () => {
   return (
@@ -20,16 +20,30 @@ const Logo = () => {
 const DashboardLayout: React.FC = () => {
   const [user, dispatch] = useContext(AuthContext);
   const location = useLocation();
-  // if (!user?.authorized) {
-  //   return <Navigate to="/auth/login" />;
-  // }
+  const navigate = useNavigate();
+
+  let menuData;
+  if (user?.user?.role === "admin") {
+    menuData = adminMenu;
+  } else if (user?.user?.role === "finance") {
+    menuData = financeMenu;
+  } else {
+    menuData = userMenu;
+  }
+
+  const handleLogout = () => {
+    dispatch({ type: AuthActionTypes.LOGOUT });
+    auth.removeToken();
+    navigate("/auth/login");
+  };
+
   return (
     <ProLayout
       style={{
         borderRadius: "100px",
       }}
       logo={<Logo />}
-      title="AI Based News Dashboard"
+      title="Boilerplate"
       menuItemRender={(item, dom) => (
         <Link to={item.path as string} key={item.path}>
           {dom}
@@ -37,22 +51,38 @@ const DashboardLayout: React.FC = () => {
       )}
       layout="top"
       contentStyle={{
-        margin: 0,
         background: "#f7fafc",
         minHeight: "100vh",
         fontFamily: "Inter, sans-serif",
       }}
       menu={{
-        request: async () => {
-          return menuData;
-        },
+        request: async () => menuData,
       }}
       location={{
         pathname: location.pathname,
       }}
-      siderWidth={300}
       stylish={{}}
       fixSiderbar={true}
+      rightContentRender={() => (
+        <div className="flex items-center gap-3">
+          <Avatar
+            size={30}
+            src={file.fileToUrl(user?.user?.profile?.physical_path)}
+            className="uppercase"
+          >
+            {user?.user?.last_name?.substring(0, 2)}
+          </Avatar>
+          <div className="flex flex-col gap-1 text-white">
+            <div className="font-semibold">{user?.user?.last_name}</div>
+          </div>
+          <Logout01
+            color="#fff"
+            style={{ marginRight: "10px" }}
+            className="cursor-pointer"
+            onClick={handleLogout}
+          />
+        </div>
+      )}
       menuFooterRender={(props) => {
         if (props?.collapsed) {
           return (
@@ -60,10 +90,7 @@ const DashboardLayout: React.FC = () => {
               <Logout01
                 color="#fff"
                 className="cursor-pointer"
-                onClick={() => {
-                  dispatch({ type: AuthActionTypes.LOGOUT });
-                  auth.removeToken();
-                }}
+                onClick={handleLogout}
               />
             </div>
           );
@@ -78,18 +105,15 @@ const DashboardLayout: React.FC = () => {
               >
                 {user?.user?.username?.substring(0, 2)}
               </Avatar>
-              <div className="flex flex-col gap-2">
-                <div className="uppercase">{user?.user?.first_name}</div>
-                <div>{user?.user?.phone}</div>
+              <div className="flex flex-col gap-1">
+                <div className="font-semibold">{user?.user?.first_name}</div>
+                <div className="text-sm">{user?.user?.phone}</div>
               </div>
             </div>
             <Logout01
               color="#fff"
               className="cursor-pointer"
-              onClick={() => {
-                dispatch({ type: AuthActionTypes.LOGOUT });
-                auth.removeToken();
-              }}
+              onClick={handleLogout}
             />
           </div>
         );

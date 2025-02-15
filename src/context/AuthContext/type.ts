@@ -18,12 +18,9 @@ export interface User {
   first_name: string;
   last_name: string;
   phone: string;
-  is_active: boolean;
-  is_verified: boolean;
-  profile_id: number;
-  profile: ProfileType;
-  role: string;
-  birth_date: Date;
+  role: "user";
+  age: number;
+  regNumber: string;
 }
 
 export type AuthProviderProps = {

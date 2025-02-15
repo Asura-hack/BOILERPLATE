@@ -1,9 +1,14 @@
-/* .ant-upload-wrapper.ant-upload-picture-card-wrapper
-  .ant-upload.ant-upload-select {
-  width: 190px !important;
-  height: 140px !important;
+/* Hide scrollbar for Webkit browsers (Chrome, Safari) */
+::-webkit-scrollbar {
+  display: none;
 }
 
-img {
-  max-width: max-content;
-} */
+/* Hide scrollbar for Firefox */
+* {
+  scrollbar-width: none;
+}
+
+/* Hide scrollbar for IE/Edge */
+* {
+  -ms-overflow-style: none;
+}

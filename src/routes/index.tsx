@@ -7,6 +7,7 @@ import { Suspense } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { authRoutes } from "./auth";
 import { dashboardRoutes } from "./dashboard";
+import ProtectedRoute from "./protectedRoute";
 
 const MainRoutes: React.FC = () => {
   const [user] = useAuthContext();
@@ -15,19 +16,20 @@ const MainRoutes: React.FC = () => {
     {
       key: "dashboard",
       path: "/dashboard",
-      element: <DashboardLayout />,
+      element: (
+        <ProtectedRoute>
+          <DashboardLayout />
+        </ProtectedRoute>
+      ),
       children: dashboardRoutes,
     },
-  ];
-
-  if (!user?.authorized) {
-    routes.push({
+    {
       key: "auth",
       path: "/auth",
       element: <AuthLayout />,
       children: authRoutes,
-    });
-  }
+    },
+  ];
 
   return (
     <Routes>
@@ -59,10 +61,15 @@ const MainRoutes: React.FC = () => {
         path="*"
         element={
           user?.authorized ? (
-            <Navigate to="dashboard/dashboard" />
+            user.user.role === "admin" ? (
+              <Navigate to="/dashboard/employee-registration" />
+            ) : user.user.role === "finance" ? (
+              <Navigate to="/dashboard/site-registration" />
+            ) : (
+              <Navigate to="/dashboard/user-dashboard" />
+            )
           ) : (
-            // <Navigate to="auth/login" />
-            <Navigate to="dashboard/dashboard" />
+            <Navigate to="/auth/login" />
           )
         }
       />

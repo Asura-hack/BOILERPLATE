@@ -1,14 +1,26 @@
+// src/api/auth/index.ts
 import { decryptWithAES, encryptWithAES } from "utils/parse";
-import http from "..";
-import { Admin, LoginData, LoginResponse } from "./type";
+import { LoginData, LoginResponse, Admin } from "./type";
+import { staticAdmin, staticFinance, staticUser } from "./users";
+
 const tokenKey = "newsadmin.token";
 const userKey = "app.user";
 
 namespace auth {
-  export const login = (body?: LoginData) =>
-    http.post<LoginResponse>("admin/auth/login", {
-      body,
+  export const login = (body?: LoginData) => {
+    return new Promise<LoginResponse>((resolve, reject) => {
+      if (body?.email === "admin@example.com" && body?.password === "Admin123!") {
+        resolve({ token: "admin-token", user: staticAdmin });
+      } else if (body?.email === "finance@example.com" && body?.password === "Finance123!") {
+        resolve({ token: "finance-token", user: staticFinance });
+      } else if (body?.email === "user@example.com" && body?.password === "User123!") {
+        resolve({ token: "user-token", user: staticUser });
+      } else {
+        reject({ message: "Invalid email or password" });
+      }
     });
+  };
+
 
   export const saveToken = (token: string) => {
     localStorage.setItem(tokenKey, token);
@@ -18,8 +30,20 @@ namespace auth {
   export const removeToken = () => localStorage.removeItem(tokenKey);
   export const getToken = () => localStorage.getItem(tokenKey);
 
-  export const info = () =>
-    http.get<Admin>("admin/auth/info", { hasAuth: true });
+  export const info = () => {
+    return new Promise<Admin>((resolve, reject) => {
+      const token = getToken();
+      if (token === "admin-token") {
+        resolve(staticAdmin);
+      } else if (token === "finance-token") {
+        resolve(staticFinance);
+      } else if (token === "user-token") {
+        resolve(staticUser);
+      } else {
+        reject({ message: "Invalid token" });
+      }
+    });
+  };
 
   export const rememberUser = (values: LoginData) => {
     if (values.remember) {

@@ -1,34 +1,22 @@
-import http from "api";
+import axios from 'axios';
 import { UsersType } from "./types";
 
+const http = axios.create({
+  baseURL: 'http://localhost:3000/dashboard', // Adjust this base URL as necessary
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
 namespace users {
-  export const create = (body: any) =>
-    http.post<any>("admin/users", {
-      hasAuth: true,
-      body,
-    });
-
-  export const get = (id: number) =>
-    http.get<any>(`admin/users/${id}`, {
-      hasAuth: true,
-    });
-
   export const list = (params: any) =>
     http.post<UsersType[]>("admin/users/list", {
       hasAuth: true,
       params,
     });
 
-  export const update = (id: number, body: any) =>
-    http.put<any>(`admin/users/${id}`, {
-      hasAuth: true,
-      body,
-    });
-
-  export const deleteUser = (id: number) =>
-    http.del<any>(`admin/users/${id}`, {
-      hasAuth: true,
-    });
+  // Add Other API call methods, if any (e.g., create, get, update, deleteUser)...
+  // Ensure these are not declared more than once.
 }
 
+// Single export default statement
 export default users;

@@ -34,7 +34,6 @@ const TableHeader: React.FC<TableHeaderProps> = ({ onAddUser, users }) => {
 
   return (
     <div style={{ padding: "10px 20px", borderBottom: "1px solid #ddd" }}>
-      <h3 style={{ marginBottom: 10 }}>Нийт {users.length}</h3>
       <div
         style={{
           display: "flex",

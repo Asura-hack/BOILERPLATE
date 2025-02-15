@@ -28,3 +28,21 @@ export interface Admin {
   district_id: number;
   agency_id: number;
 }
+
+export interface Finance {
+  id: number;
+  created_at: Date;
+  updated_at: Date;
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone: string;
+  is_active: boolean;
+  position: string;
+  user_type: number;
+  city_id: number;
+  role: string;
+  profile_id: number;
+  district_id: number;
+  agency_id: number;
+}
