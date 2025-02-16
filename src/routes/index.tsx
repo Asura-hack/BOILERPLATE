@@ -57,6 +57,10 @@ const MainRoutes: React.FC = () => {
         </Route>
       ))}
       <Route
+        path="/"
+        element={<Navigate to="/auth/login" />}
+      />
+      <Route
         key={"root"}
         path="*"
         element={

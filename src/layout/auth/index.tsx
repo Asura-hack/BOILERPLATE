@@ -12,9 +12,7 @@ const AuthLayout: React.FC = () => {
       }}
     >
       <Outlet />
-      <div className="fixed bottom-10 text-white md:text-xl text-base text-center">
-        @{new Date().getFullYear()} Зохиогчийн эрх хуулиар хамгаалагдсан
-      </div>
+      
     </div>
   );
 };
